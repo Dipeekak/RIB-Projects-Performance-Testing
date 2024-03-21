@@ -1,13 +1,13 @@
 import http from "k6/http";
  
-   const loginUrl = 'https://api.identity-service.qa.rib.build/connect/token';
+   const loginUrl = 'https://api.identity-service.main.qa.rib.build/connect/token';
 export default function() {
     let createData = {
     
-    client_id: 'rib.project.web',
-    scope : 'openid profile rib.project.web',
-    username: 'Autoqatest1@yopmail.com',
-    password: 'Password@1',
+    client_id: 'ribhubshell',
+    scope : 'openid profile ccsboa.main.qa rib.project.web rib.tenantmanagement.web rib.entitlementmanagement.web rib.usermanagement.web ribhubshel',
+    username: 'serviceuser@yopmail.com',
+    password: 'm2OC29D9@n',
     grant_type: 'password' };
     let loginResponse = http.post(loginUrl, createData, {
     headers: {

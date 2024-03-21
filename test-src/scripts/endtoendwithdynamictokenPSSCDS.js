@@ -46,7 +46,7 @@ console.log('Token is  :', token);
   return JSON.parse(loginResponse.body).access_token;
 }
 
-export const options = {
+ export const options = {
   scenarios: {
     contacts: {
       executor: 'ramping-vus',
@@ -72,7 +72,8 @@ export const options = {
       gracefulRampDown: '30s',
     },
   },
-};
+}; 
+
 export default function (){
   const user = userCredentials[__VU - 1];
   console.log('current user:', user);

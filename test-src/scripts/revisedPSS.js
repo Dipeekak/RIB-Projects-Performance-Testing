@@ -18,13 +18,13 @@ export let proj_startDate = "";
 export let proj_id_list = [];
 
 const loginUrl = 'https://api.identity-service.qa.rib.build/connect/token';
-const userCredentials = open('data.txt').split('\n').map((email) => email.trim());
-const user = userCredentials[__VU - 1];
-const password = 'Password@1';
+//const userCredentials = open('data.txt').split('\n').map((email) => email.trim());
+//const user = userCredentials[__VU - 1];
+//const password = 'Password@1';
 //console.log(user);
 
 
-/* export const options = {
+ export const options = {
   scenarios: {
     contacts: {
       executor: 'per-vu-iterations',
@@ -37,34 +37,34 @@ const password = 'Password@1';
     http_req_duration: ['p(95)<1000'], // 95% of requests should complete within 1000ms
   },
   
-}; */
+}; 
 
-  /*  export const options = {
+    /* export const options = {
   scenarios: {
     contacts: {
       executor: 'ramping-vus',
       startVUs: 0,
       stages: [         
   
-        { duration: '100s', target: 100},
-        { duration: '10m', target:100},
-        { duration: '100s', target: 0 }
+        { duration: '30s', target: 50},
+        { duration: '20s', target:50},
+        { duration: '30s', target: 0 }
   
             ],
-      gracefulRampDown: '60s',
+      gracefulRampDown: '30s',
     },
   },
-  };      */
+  };       */
   
 export default function () {
 
 
   let createData = {
 
-    client_id: 'rib.project.web',
-    scope: 'openid profile rib.project.web',
-    username: `${user}`,
-    password: 'Password@1',
+    client_id: 'rib.tenantmanagement',
+    scope: 'openid profile rib.tenantmanagement.web offline_access',
+    username: 'qa_use_superadmin@yopmail.com',
+    password: 'qa_Superadmin@123',
     grant_type: 'password'
   };
   let loginResponse = http.post(loginUrl, createData, {
@@ -82,7 +82,7 @@ export default function () {
       "Content-Type": "application/json",
     };
 
-    console.log(Bearer_Token);
+    //console.log(Bearer_Token);
     ///////////////////////////////////Project Service API////////////////////////////////
 
     //1.ValidateProjectName
@@ -121,23 +121,7 @@ export default function () {
       "startDate": "2023-07-28T16:49:54+05:30",
       "endDate": "2023-07-28T16:49:54+05:30",
       "notes": "SProject-1207",
-      "address": {
-        "address": "Mumbai-west",
-        "latitude": 0,
-        "longitude": 0,
-        "addressDetails": {
-          "houseNumber": "Nashik",
-          "road": "Nashik",
-          "town": "Nashik",
-          "village": "Nashik",
-          "city": "Nashik",
-          "state": "MH",
-          "county": "MH",
-          "postcode": "11344",
-          "country": "IND"
-        }
-      },
-      "lastAccessed": "2023-06-28T16:49:54+05:30"
+      "companyId": "28fe03d2-4227-40b9-a12c-cf27b3811b3b"
     }
   
 
@@ -147,16 +131,14 @@ export default function () {
 
     const jsonData15 = JSON.parse(res15.body);
 
-
+    console.log(`${res15.url}, Request Body: ${JSON.stringify(res15.request.body)}, Response Body: ${JSON.stringify(res15.body)}`);
     //sleep(8);
 
     proj_id = jsonData15.Result.projectId;
 
     proj_code = jsonData15.Result.projectCode;
 
-    //console.log(`${res15.url}, Request Body: ${JSON.stringify(res15.request.body)}, Response Body: ${JSON.stringify(res15.body)}`);
-
-
+    
     //6.GetProjectDetails  
 
      let res16 = http.get(`${constants.GetProjectDetailsURL}?ProjectId=${proj_id}`, { headers: headers });
@@ -167,7 +149,7 @@ export default function () {
    // sleep(6);
     
 
-    console.log(`${res16.url}, Request Body: ${JSON.stringify(res16.request.body)}, Response Body: ${JSON.stringify(res16.body)}`); 
+    //console.log(`${res16.url}, Request Body: ${JSON.stringify(res16.request.body)}, Response Body: ${JSON.stringify(res16.body)}`); 
 
 
 
@@ -240,25 +222,8 @@ export default function () {
       "startDate": "2024-01-18T16:49:54+05:30",
       "endDate": "2024-01-18T16:49:54+05:30",
       "notes": "SProject-1207",
-      "address": {
-        "address": "Mumbai-west",
-        "latitude": 0,
-        "longitude": 0,
-        "addressDetails": {
-          "houseNumber": "Nashik",
-          "road": "Nashik",
-          "town": "Nashik",
-          "village": "Nashik",
-          "city": "Nashik",
-          "state": "MH",
-          "county": "MH",
-          "postcode": "11344",
-          "country": "IND"
-        }
-      },
-      "lastAccessed": "2023-06-28T16:49:54+05:30"
-      
-    }
+      "companyId": "28fe03d2-4227-40b9-a12c-cf27b3811b3b"
+      }
     let res17 = http.put(constants.UpdateProjectURL, JSON.stringify(data4), { headers: headers, });
     //sleep(5);
     //console.log(`${res17.url}, Request Body: ${JSON.stringify(res17.request.body)}, Response Body: ${JSON.stringify(res17.body)}`);
